@@ -5,7 +5,7 @@
 
 #define MAX_LEN 256
 #define MAX_CHAR_SCAN "%255s"
-#define GARBAGE_CAP 100 // має бути рівна CLIENT_NUMBER
+#define GARBAGE_CAP 100 // РјР°С” Р±СѓС‚Рё СЂС–РІРЅР° CLIENT_NUMBER
 #define CLIENT_NUMBER 100
 #define BRIGADE_NUMBER 100
 #define ORDER_NUMBER 10000
@@ -13,7 +13,7 @@
 typedef struct TClient
 {
     int id;
-    char name [MAX_LEN]; //ім'я
+    char name [MAX_LEN]; //С–Рј'СЏ
     char phone [MAX_LEN];
     int first_s;
 } Client;
@@ -21,14 +21,14 @@ typedef struct TClient
 typedef struct TStack
 {
     int arr[GARBAGE_CAP];
-    int top; // індекс першого елемента без значення
+    int top; // С–РЅРґРµРєСЃ РїРµСЂС€РѕРіРѕ РµР»РµРјРµРЅС‚Р° Р±РµР· Р·РЅР°С‡РµРЅРЅСЏ
 } Stack;
 
 typedef struct TOrder
 {
     int client_id;
     int brigade_id;
-    char name[MAX_LEN]; // назва
+    char name[MAX_LEN]; // РЅР°Р·РІР°
     char final_date[MAX_LEN];
     char info[MAX_LEN];
     int next_addr;
@@ -36,7 +36,7 @@ typedef struct TOrder
 
 Client get_m (FILE *f, int id, int *itable);
 
-// якщо файл fl пустий, то потрібно заповнити стек сміття і записати його в файл
+// СЏРєС‰Рѕ С„Р°Р№Р» fl РїСѓСЃС‚РёР№, С‚Рѕ РїРѕС‚СЂС–Р±РЅРѕ Р·Р°РїРѕРІРЅРёС‚Рё СЃС‚РµРє СЃРјС–С‚С‚СЏ С– Р·Р°РїРёСЃР°С‚Рё Р№РѕРіРѕ РІ С„Р°Р№Р»
 void preproc(FILE *f, Stack *garbage)
 {
     fseek(f, 0L, SEEK_SET);
@@ -59,41 +59,41 @@ void insert_m (FILE *f, Stack *garbage, int* itable)
         memset(one.name, 0, MAX_LEN);
         memset(one.phone, 0, MAX_LEN);
 
-        printf("Введіть код клієнта\n");
+        printf("Р’РІРµРґС–С‚СЊ РєРѕРґ РєР»С–С”РЅС‚Р°\n");
         if (scanf("%d", &(one.id)) == 0)
         {
-            printf("Формат коду неправильний, спробуйте знову\nВвід буде розпочато знову\n");
+            printf("Р¤РѕСЂРјР°С‚ РєРѕРґСѓ РЅРµРїСЂР°РІРёР»СЊРЅРёР№, СЃРїСЂРѕР±СѓР№С‚Рµ Р·РЅРѕРІСѓ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n");
             fflush(stdin);
             continue;
         }
         if ((one.id < 0) || (one.id >= CLIENT_NUMBER))
         {
-            printf("Введіть число в проміжку від 0 до %d включно\nВвід буде розпочато знову\n", CLIENT_NUMBER - 1);
+            printf("Р’РІРµРґС–С‚СЊ С‡РёСЃР»Рѕ РІ РїСЂРѕРјС–Р¶РєСѓ РІС–Рґ 0 РґРѕ %d РІРєР»СЋС‡РЅРѕ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n", CLIENT_NUMBER - 1);
             continue;
         }
         if (itable[one.id] != -1)
         {
-            printf("Клієнт з таким кодом вже існує. Введіть новий код\nВвід буде розпочато знову\n");
+            printf("РљР»С–С”РЅС‚ Р· С‚Р°РєРёРј РєРѕРґРѕРј РІР¶Рµ С–СЃРЅСѓС”. Р’РІРµРґС–С‚СЊ РЅРѕРІРёР№ РєРѕРґ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n");
             continue;
         }
 
-        printf("Введіть назву клієнта (латиницею)\n");
+        printf("Р’РІРµРґС–С‚СЊ РЅР°Р·РІСѓ РєР»С–С”РЅС‚Р° (Р»Р°С‚РёРЅРёС†РµСЋ)\n");
         if (scanf(MAX_CHAR_SCAN, one.name) == 0)
         {
-            printf("Формат імені неправильний, спробуйте знову\nВвід буде розпочато знову\n");
+            printf("Р¤РѕСЂРјР°С‚ С–РјРµРЅС– РЅРµРїСЂР°РІРёР»СЊРЅРёР№, СЃРїСЂРѕР±СѓР№С‚Рµ Р·РЅРѕРІСѓ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n");
             fflush(stdin);
             continue;
         }
-        printf("Введіть номер телефону клієнта\n");
+        printf("Р’РІРµРґС–С‚СЊ РЅРѕРјРµСЂ С‚РµР»РµС„РѕРЅСѓ РєР»С–С”РЅС‚Р°\n");
         if (scanf(MAX_CHAR_SCAN, one.phone) == 0)
         {
-            printf("Формат телефону неправильний, спробуйте знову\nВвід буде розпочато знову");
+            printf("Р¤РѕСЂРјР°С‚ С‚РµР»РµС„РѕРЅСѓ РЅРµРїСЂР°РІРёР»СЊРЅРёР№, СЃРїСЂРѕР±СѓР№С‚Рµ Р·РЅРѕРІСѓ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ");
             fflush(stdin);
             continue;
         }
         p = 0;
     }
-    printf("Клієнт успішно введений\n\n");
+    printf("РљР»С–С”РЅС‚ СѓСЃРїС–С€РЅРѕ РІРІРµРґРµРЅРёР№\n\n");
     one.first_s = -1;
     itable[one.id] = garbage->arr[garbage->top - 1];
     fseek(f, (long) sizeof(int)+sizeof(int)*GARBAGE_CAP + garbage->arr[garbage->top - 1]*(sizeof(Client)), SEEK_SET);
@@ -125,21 +125,21 @@ void insert_s (FILE *mf, FILE *sf, Stack *garbage, int *itable)
         int r = 1;
         while(r)
         {
-            printf("Введіть код клієнта\n");
+            printf("Р’РІРµРґС–С‚СЊ РєРѕРґ РєР»С–С”РЅС‚Р°\n");
             if (scanf("%d", &(ord.client_id)) == 0)
             {
-                printf("Формат коду неправильний, спробуйте знову\nВвід буде розпочато знову\n\n");
+                printf("Р¤РѕСЂРјР°С‚ РєРѕРґСѓ РЅРµРїСЂР°РІРёР»СЊРЅРёР№, СЃРїСЂРѕР±СѓР№С‚Рµ Р·РЅРѕРІСѓ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n\n");
                 fflush(stdin);
                 continue;
             }
             if ((ord.client_id < 0) || (ord.client_id >= CLIENT_NUMBER))
             {
-                printf("Введіть число в проміжку від 0 до %d включно\nВвід буде розпочато знову\n", CLIENT_NUMBER - 1);
+                printf("Р’РІРµРґС–С‚СЊ С‡РёСЃР»Рѕ РІ РїСЂРѕРјС–Р¶РєСѓ РІС–Рґ 0 РґРѕ %d РІРєР»СЋС‡РЅРѕ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n", CLIENT_NUMBER - 1);
                 continue;
             }
             if (itable[ord.client_id] == -1)
             {
-                printf("Клієнта з таким кодом не існує. Введіть новий код\nВвід буде розпочато знову\n");
+                printf("РљР»С–С”РЅС‚Р° Р· С‚Р°РєРёРј РєРѕРґРѕРј РЅРµ С–СЃРЅСѓС”. Р’РІРµРґС–С‚СЊ РЅРѕРІРёР№ РєРѕРґ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n");
                 continue;
             }
             r = 0;
@@ -149,16 +149,16 @@ void insert_s (FILE *mf, FILE *sf, Stack *garbage, int *itable)
         int t = 1;
         while(t)
         {
-            printf("Введіть код бригади\n");
+            printf("Р’РІРµРґС–С‚СЊ РєРѕРґ Р±СЂРёРіР°РґРё\n");
             if (scanf("%d", &(ord.brigade_id)) == 0)
             {
-                printf("Формат коду неправильний, спробуйте знову\nВвід буде розпочато знову\n");
+                printf("Р¤РѕСЂРјР°С‚ РєРѕРґСѓ РЅРµРїСЂР°РІРёР»СЊРЅРёР№, СЃРїСЂРѕР±СѓР№С‚Рµ Р·РЅРѕРІСѓ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n");
                 fflush(stdin);
                 continue;
             }
             if ((ord.brigade_id < 0) || (ord.brigade_id >= BRIGADE_NUMBER))
             {
-                printf("Введіть число в проміжку від 0 до %d включно\nВвід буде розпочато знову\n", BRIGADE_NUMBER - 1);
+                printf("Р’РІРµРґС–С‚СЊ С‡РёСЃР»Рѕ РІ РїСЂРѕРјС–Р¶РєСѓ РІС–Рґ 0 РґРѕ %d РІРєР»СЋС‡РЅРѕ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n", BRIGADE_NUMBER - 1);
                 fflush(stdin);
                 continue;
             }
@@ -167,10 +167,10 @@ void insert_s (FILE *mf, FILE *sf, Stack *garbage, int *itable)
         int y = 1;
         while(y)
         {
-            printf("Введіть назву замовлення (латиницею)\n");
+            printf("Р’РІРµРґС–С‚СЊ РЅР°Р·РІСѓ Р·Р°РјРѕРІР»РµРЅРЅСЏ (Р»Р°С‚РёРЅРёС†РµСЋ)\n");
             if (scanf(MAX_CHAR_SCAN, ord.name) == 0)
             {
-                printf("Формат імені неправильний, спробуйте знову\nВвід буде розпочато знову\n");
+                printf("Р¤РѕСЂРјР°С‚ С–РјРµРЅС– РЅРµРїСЂР°РІРёР»СЊРЅРёР№, СЃРїСЂРѕР±СѓР№С‚Рµ Р·РЅРѕРІСѓ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n");
                 fflush(stdin);
                 continue;
             }
@@ -179,10 +179,10 @@ void insert_s (FILE *mf, FILE *sf, Stack *garbage, int *itable)
         int e = 1;
         while (e)
         {
-            printf("Введіть кінцеву дату виконання замовлення\n");
+            printf("Р’РІРµРґС–С‚СЊ РєС–РЅС†РµРІСѓ РґР°С‚Сѓ РІРёРєРѕРЅР°РЅРЅСЏ Р·Р°РјРѕРІР»РµРЅРЅСЏ\n");
             if (scanf(MAX_CHAR_SCAN, ord.final_date) == 0)
             {
-                printf("Формат дати неправильний, спробуйте знову\nВвід буде розпочато знову\n");
+                printf("Р¤РѕСЂРјР°С‚ РґР°С‚Рё РЅРµРїСЂР°РІРёР»СЊРЅРёР№, СЃРїСЂРѕР±СѓР№С‚Рµ Р·РЅРѕРІСѓ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n");
                 fflush(stdin);
                 continue;
             }
@@ -191,10 +191,10 @@ void insert_s (FILE *mf, FILE *sf, Stack *garbage, int *itable)
         e = 1;
         while (e)
         {
-            printf("Введіть іншу інформацію про замовлення\n");
+            printf("Р’РІРµРґС–С‚СЊ С–РЅС€Сѓ С–РЅС„РѕСЂРјР°С†С–СЋ РїСЂРѕ Р·Р°РјРѕРІР»РµРЅРЅСЏ\n");
             if (scanf(MAX_CHAR_SCAN, ord.info) == 0)
             {
-                printf("Формат тексту неправильний, спробуйте знову\nВвід буде розпочато знову\n");
+                printf("Р¤РѕСЂРјР°С‚ С‚РµРєСЃС‚Сѓ РЅРµРїСЂР°РІРёР»СЊРЅРёР№, СЃРїСЂРѕР±СѓР№С‚Рµ Р·РЅРѕРІСѓ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n");
                 fflush(stdin);
                 continue;
             }
@@ -216,7 +216,7 @@ void insert_s (FILE *mf, FILE *sf, Stack *garbage, int *itable)
             fread(&another, sizeof(Order), 1, sf);
         }
         another.next_addr = garbage->arr[garbage->top - 1];
-        fseek(sf, (long) (-1)*sizeof(Order), SEEK_CUR);// сумнівно
+        fseek(sf, (long) (-1)*sizeof(Order), SEEK_CUR);// СЃСѓРјРЅС–РІРЅРѕ
         fwrite(&another, sizeof(Order), 1, sf);//
 
         fseek(sf, (long) sizeof(int) + sizeof(int)*GARBAGE_CAP + another.next_addr*sizeof(Order), SEEK_SET);
@@ -241,18 +241,18 @@ void insert_s (FILE *mf, FILE *sf, Stack *garbage, int *itable)
     }
     fseek(sf, 0L, SEEK_SET);
     fseek(mf, 0L, SEEK_SET);
-    printf("Замовлення успішно введено\n\n");
+    printf("Р—Р°РјРѕРІР»РµРЅРЅСЏ СѓСЃРїС–С€РЅРѕ РІРІРµРґРµРЅРѕ\n\n");
 }
 
 void ut_m (FILE *f, Stack *garbage, int *itable)
 {
-    printf("%d\n", garbage->top); //службова штука
+    /* printf("%d\n", garbage->top); //СЃР»СѓР¶Р±РѕРІР° С€С‚СѓРєР°
     for (int i = 0; i < GARBAGE_CAP; i++)//
         printf("%d ", garbage->arr[i]);//
     printf("\nitable:\n");
     for (int i = 0; i < CLIENT_NUMBER; i++)
         printf("%d ", itable[i]);
-    printf("\n");// кінець службової штуки
+    printf("\n");// РєС–РЅРµС†СЊ СЃР»СѓР¶Р±РѕРІРѕС— С€С‚СѓРєРё */
 
     fseek(f, (long) sizeof(int) + sizeof(int)*GARBAGE_CAP, SEEK_SET);
     int l = ftell(f);
@@ -274,22 +274,22 @@ void ut_m (FILE *f, Stack *garbage, int *itable)
         print_client(&one, count);
     }
     if (count == 0)
-        printf("В базі поки відсутні клієнти\n");
+        printf("Р’ Р±Р°Р·С– РїРѕРєРё РІС–РґСЃСѓС‚РЅС– РєР»С–С”РЅС‚Рё\n");
     fseek(f, 0L, SEEK_SET);
     printf("\n");
 }
 
 void ut_s (FILE *mf, FILE *sf, Stack *garbage, int *itable, int client_id)
 {
-    printf("%d\n", garbage->top); //службова штука
+    /*printf("%d\n", garbage->top); //СЃР»СѓР¶Р±РѕРІР° С€С‚СѓРєР°
     for (int i = 0; i < GARBAGE_CAP; i++)//
         printf("%d ", garbage->arr[i]);//
-    printf("\n");// кінець службової штуки
+    printf("\n");// РєС–РЅРµС†СЊ СЃР»СѓР¶Р±РѕРІРѕС— С€С‚СѓРєРё*/
 
     Client one = get_m(mf, client_id, itable);
     if (one.first_s == -1)
     {
-        printf("У цього клієнта немає замовлень\n\n");
+        printf("РЈ С†СЊРѕРіРѕ РєР»С–С”РЅС‚Р° РЅРµРјР°С” Р·Р°РјРѕРІР»РµРЅСЊ\n\n");
         return;
     }
     fseek(sf, (long) sizeof(int) + sizeof(int)*GARBAGE_CAP + one.first_s*sizeof(Order), SEEK_SET);
@@ -315,7 +315,7 @@ int del_s(FILE *mf, FILE *sf, int client_id, Stack *sgarbage, int *itable)
     one = get_m(mf, client_id, itable);
     if (one.first_s == -1)
     {
-        printf("У цього клієнта немає замовлень\n");
+        printf("РЈ С†СЊРѕРіРѕ РєР»С–С”РЅС‚Р° РЅРµРјР°С” Р·Р°РјРѕРІР»РµРЅСЊ\n");
         return -1;
     }
     int br_id = 0;
@@ -323,16 +323,16 @@ int del_s(FILE *mf, FILE *sf, int client_id, Stack *sgarbage, int *itable)
     while(t)
     {
         br_id = 0;
-        printf("Введіть код бригади\n");
+        printf("Р’РІРµРґС–С‚СЊ РєРѕРґ Р±СЂРёРіР°РґРё\n");
         if (scanf("%d", &br_id) == 0)
         {
-            printf("Формат коду неправильний, спробуйте знову\nВвід буде розпочато знову\n");
+            printf("Р¤РѕСЂРјР°С‚ РєРѕРґСѓ РЅРµРїСЂР°РІРёР»СЊРЅРёР№, СЃРїСЂРѕР±СѓР№С‚Рµ Р·РЅРѕРІСѓ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n");
             fflush(stdin);
             continue;
         }
         if ((br_id < 0) || (br_id >= BRIGADE_NUMBER))
         {
-            printf("Введіть число в проміжку від 0 до %d включно\nВвід буде розпочато знову\n", BRIGADE_NUMBER - 1);
+            printf("Р’РІРµРґС–С‚СЊ С‡РёСЃР»Рѕ РІ РїСЂРѕРјС–Р¶РєСѓ РІС–Рґ 0 РґРѕ %d РІРєР»СЋС‡РЅРѕ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n", BRIGADE_NUMBER - 1);
             continue;
         }
         t = 0;
@@ -353,7 +353,7 @@ int del_s(FILE *mf, FILE *sf, int client_id, Stack *sgarbage, int *itable)
         sgarbage->top++;
         flag = 1;
     }
-    //впродовж циклу prev2 вказує на prev, prev - на res, res - на наступний
+    //РІРїСЂРѕРґРѕРІР¶ С†РёРєР»Сѓ prev2 РІРєР°Р·СѓС” РЅР° prev, prev - РЅР° res, res - РЅР° РЅР°СЃС‚СѓРїРЅРёР№
     int prev2 = one.first_s;
     Order prev = res;
     while((res.next_addr != -1) && (flag == 0))
@@ -378,12 +378,12 @@ int del_s(FILE *mf, FILE *sf, int client_id, Stack *sgarbage, int *itable)
     fseek(sf, 0L, SEEK_SET);
     if (flag == 0)
     {
-        printf("Такого замовлення не існує\n\n");
+        printf("РўР°РєРѕРіРѕ Р·Р°РјРѕРІР»РµРЅРЅСЏ РЅРµ С–СЃРЅСѓС”\n\n");
         return 0;
     }
     else
     {
-        printf("Замовлення успішно видалено\n\n");
+        printf("Р—Р°РјРѕРІР»РµРЅРЅСЏ СѓСЃРїС–С€РЅРѕ РІРёРґР°Р»РµРЅРѕ\n\n");
         return 1;
     }
 }
@@ -420,7 +420,7 @@ int get_s (FILE *mf, FILE *sf, int client_id, int *itable, Order *res)
     one = get_m(mf, client_id, itable);
     if (one.first_s == -1)
     {
-        printf("У цього клієнта немає замовлень\n");
+        printf("РЈ С†СЊРѕРіРѕ РєР»С–С”РЅС‚Р° РЅРµРјР°С” Р·Р°РјРѕРІР»РµРЅСЊ\n");
         return -1;
     }
     int br_id = 0;
@@ -428,24 +428,24 @@ int get_s (FILE *mf, FILE *sf, int client_id, int *itable, Order *res)
     while(t)
     {
         br_id = 0;
-        printf("Введіть код бригади\n");
+        printf("Р’РІРµРґС–С‚СЊ РєРѕРґ Р±СЂРёРіР°РґРё\n");
         if (scanf("%d", &br_id) == 0)
         {
-            printf("Формат коду неправильний, спробуйте знову\nВвід буде розпочато знову\n");
+            printf("Р¤РѕСЂРјР°С‚ РєРѕРґСѓ РЅРµРїСЂР°РІРёР»СЊРЅРёР№, СЃРїСЂРѕР±СѓР№С‚Рµ Р·РЅРѕРІСѓ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n");
             fflush(stdin);
             continue;
         }
         if ((br_id < 0) || (br_id >= BRIGADE_NUMBER))
         {
-            printf("Введіть число в проміжку від 0 до %d включно\nВвід буде розпочато знову\n", BRIGADE_NUMBER - 1);
+            printf("Р’РІРµРґС–С‚СЊ С‡РёСЃР»Рѕ РІ РїСЂРѕРјС–Р¶РєСѓ РІС–Рґ 0 РґРѕ %d РІРєР»СЋС‡РЅРѕ\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·РЅРѕРІСѓ\n", BRIGADE_NUMBER - 1);
             continue;
         }
         t = 0;
     }
     int flag = 0;
-    fseek(sf, 0L, SEEK_SET);
     fseek(sf, sizeof(int) + sizeof(GARBAGE_CAP) + one.first_s*sizeof(Order),SEEK_SET);
     fread(res, sizeof(Order), 1, sf);
+    Order another = *res;
     if (res->brigade_id == br_id)
         flag = 1;
     while((res->next_addr != -1) && (flag == 0))
@@ -459,7 +459,7 @@ int get_s (FILE *mf, FILE *sf, int client_id, int *itable, Order *res)
     fseek(sf, 0L, SEEK_SET);
     if (flag == 0)
     {
-        printf("Такого замовлення не існує\n");
+        printf("РўР°РєРѕРіРѕ Р·Р°РјРѕРІР»РµРЅРЅСЏ РЅРµ С–СЃРЅСѓС”\n");
         return 0;
     }
     else
@@ -492,7 +492,7 @@ void upd_s (FILE *mf, FILE *sf, Order *another, int client_id, int itable)
     one = get_m(mf, client_id, itable);
     if (one.first_s == -1)
     {
-        printf("У цього клієнта немає замовлень\n\n");
+        printf("РЈ С†СЊРѕРіРѕ РєР»С–С”РЅС‚Р° РЅРµРјР°С” Р·Р°РјРѕРІР»РµРЅСЊ\n\n");
         return -1;
     }
 
@@ -512,7 +512,7 @@ void upd_s (FILE *mf, FILE *sf, Order *another, int client_id, int itable)
         fread(&res, sizeof(Order), 1, sf);
         if (res.brigade_id == another->brigade_id)
         {
-            fseek(sf, (long) (-1)*sizeof(Order), SEEK_CUR);// сумнівно
+            fseek(sf, (long) (-1)*sizeof(Order), SEEK_CUR);// СЃСѓРјРЅС–РІРЅРѕ
             fwrite(another, sizeof(Order), 1, sf);
             flag = 1;
         }
@@ -521,12 +521,12 @@ void upd_s (FILE *mf, FILE *sf, Order *another, int client_id, int itable)
     fseek(sf, 0L, SEEK_SET);
     if (flag == 0)
     {
-        printf("Такого замовлення не існує\n\n");
+        printf("РўР°РєРѕРіРѕ Р·Р°РјРѕРІР»РµРЅРЅСЏ РЅРµ С–СЃРЅСѓС”\nРљРѕРјР°РЅРґР° Р·Р°РІРµСЂС€РµРЅР°\n");
         return 0;
     }
     else
     {
-        printf("Зміни виконано успішно\n\n");
+        printf("Р—РјС–РЅРё РІРёРєРѕРЅР°РЅРѕ СѓСЃРїС–С€РЅРѕ\n\n");
         return 1;
     }
 }
@@ -535,60 +535,60 @@ int scan_code(FILE *f, int *itable, Stack *garbage)
     int p = 1;
     while(p)
     {
-        printf("Введіть код клієнта\n");
-        printf("Щоб вивести всіх клієнтів, введіть команду ut-m\n");
-        printf("Щоб скасувати команду, введіть cancel\n");
+        printf("Р’РІРµРґС–С‚СЊ РєРѕРґ РєР»С–С”РЅС‚Р°\n");
+        printf("Р©РѕР± РІРёРІРµСЃС‚Рё РІСЃС–С… РєР»С–С”РЅС‚С–РІ, РІРІРµРґС–С‚СЊ РєРѕРјР°РЅРґСѓ ut-m\n");
+        printf("Р©РѕР± СЃРєР°СЃСѓРІР°С‚Рё РєРѕРјР°РЅРґСѓ, РІРІРµРґС–С‚СЊ cancel\n");
         char s[MAX_LEN];
         scanf(MAX_CHAR_SCAN, s);
-        // введений рядок - або число, або 0 (особливий випадок), або рядок
+        // РІРІРµРґРµРЅРёР№ СЂСЏРґРѕРє - Р°Р±Рѕ С‡РёСЃР»Рѕ, Р°Р±Рѕ 0 (РѕСЃРѕР±Р»РёРІРёР№ РІРёРїР°РґРѕРє), Р°Р±Рѕ СЂСЏРґРѕРє
         int id = 0;
         if(s[0] == '0')
         {
             if(itable[0] == -1)
             {
-                printf("Такого елемента не існує\nВвід буде розпочато заново\n\n");
+                printf("РўР°РєРѕРіРѕ РµР»РµРјРµРЅС‚Р° РЅРµ С–СЃРЅСѓС”\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·Р°РЅРѕРІРѕ\n\n");
                 continue;
             }
-            printf("Введений код: %d\n", 0);
+            printf("Р’РІРµРґРµРЅРёР№ РєРѕРґ: %d\n", 0);
             return 0;
         }
         else if ((id = atoi(s)) != 0)
         {
             if(id < 0)
             {
-                printf("Код повинен бути додатнім\nВвід буде розпочато заново\n\n");
+                printf("РљРѕРґ РїРѕРІРёРЅРµРЅ Р±СѓС‚Рё РґРѕРґР°С‚РЅС–Рј\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·Р°РЅРѕРІРѕ\n\n");
                 continue;
             }
             else if(itable[id] == -1)
             {
-                printf("Такого елемента не існує\nВвід буде розпочато заново\n\n");
+                printf("РўР°РєРѕРіРѕ РµР»РµРјРµРЅС‚Р° РЅРµ С–СЃРЅСѓС”\nР’РІС–Рґ Р±СѓРґРµ СЂРѕР·РїРѕС‡Р°С‚Рѕ Р·Р°РЅРѕРІРѕ\n\n");
                 continue;
             }
             else
             {
-                printf("Введений код: %d\n", id);
+                printf("Р’РІРµРґРµРЅРёР№ РєРѕРґ: %d\n", id);
                 return id;
             }
         }
         else if (strcmp(s, "cancel") == 0)
         {
-            printf("Команду скасовано\n\n");
+            printf("РљРѕРјР°РЅРґСѓ СЃРєР°СЃРѕРІР°РЅРѕ\n\n");
             return -1;
         }
         else if(strcmp(s, "ut-m") == 0)
         {
-            printf("Всі клієнти:\n");
+            printf("Р’СЃС– РєР»С–С”РЅС‚Рё:\n");
             ut_m(f, garbage, itable);
             printf("\n");
             continue;
         }
         else
         {
-            printf("Такої команди не існує, спробуйте знову");
+            printf("РўР°РєРѕС— РєРѕРјР°РЅРґРё РЅРµ С–СЃРЅСѓС”, СЃРїСЂРѕР±СѓР№С‚Рµ Р·РЅРѕРІСѓ");
             printf("\n\n");
             continue;
         }
-        p = 0;// воно не повинно дійти до цього рядка
+        p = 0;// РІРѕРЅРѕ РЅРµ РїРѕРІРёРЅРЅРѕ РґС–Р№С‚Рё РґРѕ С†СЊРѕРіРѕ СЂСЏРґРєР°
     }
     return -1;
 }
@@ -596,15 +596,15 @@ int scan_code(FILE *f, int *itable, Stack *garbage)
 void print_client(Client *one, int is_first)
 {
     if (is_first == 1)
-        printf("%-16s %-16s %-16s %-16s\n", "Код", "Назва", "Телефон", "Номер першого запису");
+        printf("%-16s %-16s %-16s %-16s\n", "РљРѕРґ", "РќР°Р·РІР°", "РўРµР»РµС„РѕРЅ", "РќРѕРјРµСЂ РїРµСЂС€РѕРіРѕ Р·Р°РїРёСЃСѓ");
     printf("%-16d %-16s %-16s %-16d\n", one->id, one->name, one->phone, one->first_s);
 }
 
 void print_order(Order *another, int is_first)
 {
     if (is_first == 1)
-        printf("%-16s %-16s %-16s %-16s %-16s %-16s\n", "Код клієнта", "Код бригади","Назва замовлення",
-                                                      "Інформація", "Кінцева дата", "Адреса наступного");
+        printf("%-16s %-16s %-16s %-16s %-16s %-16s\n", "РљРѕРґ РєР»С–С”РЅС‚Р°", "РљРѕРґ Р±СЂРёРіР°РґРё","РќР°Р·РІР° Р·Р°РјРѕРІР»РµРЅРЅСЏ",
+                                                      "Р†РЅС„РѕСЂРјР°С†С–СЏ", "РљС–РЅС†РµРІР° РґР°С‚Р°", "РђРґСЂРµСЃР° РЅР°СЃС‚СѓРїРЅРѕРіРѕ");
     printf("%-16d %-16d %-16s %-16s %-16s %-16d\n", another->client_id, another->brigade_id,
                 another->name, another->info, another->final_date, another->next_addr);
 }
@@ -612,7 +612,7 @@ void scan_garbage(FILE *f, Stack *garbage)
 {
     fseek(f, 0L, SEEK_END);
     if (ftell(f) == 0)
-        preproc(f, garbage);// не потрібно ставити зчитування знову на початок, оскільки файл пустий
+        preproc(f, garbage);// РЅРµ РїРѕС‚СЂС–Р±РЅРѕ СЃС‚Р°РІРёС‚Рё Р·С‡РёС‚СѓРІР°РЅРЅСЏ Р·РЅРѕРІСѓ РЅР° РїРѕС‡Р°С‚РѕРє, РѕСЃРєС–Р»СЊРєРё С„Р°Р№Р» РїСѓСЃС‚РёР№
     else
     {
         fseek(f, 0L, SEEK_SET);
@@ -653,19 +653,19 @@ void scan_itable(FILE *f, int *itable)
 
 void print_help()
 {
-    printf("Список команд:\n");
-    printf("get-m - знайти заданого клієнта\n");
-    printf("get-s - для заданого клієнта знайти потрібне замовлення\n");
-    printf("del-m - видалити заданого клієнта\n");
-    printf("del-s - для заданого клієнта видалити введене замовлення\n");
-    printf("update-m - оновити значення потрібного поля клієнта\n");
-    printf("update-s - для заданого клієнта оновити значення потрібного замовлення\n");
-    printf("insert-m - внести новго клієнта\n");
-    printf("insert-s - для заданого клієнта внести нове замовлення\n");
-    printf("ut-m - вивести всіх клієнтів\n");
-    printf("ut-s - вивести всі замовлення потрібного клієнта\n");
-    printf("help - виклик довідки\n");
-    printf("exit - завершити роботу з програмою\n\n");
+    printf("РЎРїРёСЃРѕРє РєРѕРјР°РЅРґ:\n");
+    printf("get-m - Р·РЅР°Р№С‚Рё Р·Р°РґР°РЅРѕРіРѕ РєР»С–С”РЅС‚Р°\n");
+    printf("get-s - РґР»СЏ Р·Р°РґР°РЅРѕРіРѕ РєР»С–С”РЅС‚Р° Р·РЅР°Р№С‚Рё РїРѕС‚СЂС–Р±РЅРµ Р·Р°РјРѕРІР»РµРЅРЅСЏ\n");
+    printf("del-m - РІРёРґР°Р»РёС‚Рё Р·Р°РґР°РЅРѕРіРѕ РєР»С–С”РЅС‚Р°\n");
+    printf("del-s - РґР»СЏ Р·Р°РґР°РЅРѕРіРѕ РєР»С–С”РЅС‚Р° РІРёРґР°Р»РёС‚Рё РІРІРµРґРµРЅРµ Р·Р°РјРѕРІР»РµРЅРЅСЏ\n");
+    printf("update-m - РѕРЅРѕРІРёС‚Рё Р·РЅР°С‡РµРЅРЅСЏ РїРѕС‚СЂС–Р±РЅРѕРіРѕ РїРѕР»СЏ РєР»С–С”РЅС‚Р°\n");
+    printf("update-s - РґР»СЏ Р·Р°РґР°РЅРѕРіРѕ РєР»С–С”РЅС‚Р° РѕРЅРѕРІРёС‚Рё Р·РЅР°С‡РµРЅРЅСЏ РїРѕС‚СЂС–Р±РЅРѕРіРѕ Р·Р°РјРѕРІР»РµРЅРЅСЏ\n");
+    printf("insert-m - РІРЅРµСЃС‚Рё РЅРѕРІРіРѕ РєР»С–С”РЅС‚Р°\n");
+    printf("insert-s - РґР»СЏ Р·Р°РґР°РЅРѕРіРѕ РєР»С–С”РЅС‚Р° РІРЅРµСЃС‚Рё РЅРѕРІРµ Р·Р°РјРѕРІР»РµРЅРЅСЏ\n");
+    printf("ut-m - РІРёРІРµСЃС‚Рё РІСЃС–С… РєР»С–С”РЅС‚С–РІ\n");
+    printf("ut-s - РІРёРІРµСЃС‚Рё РІСЃС– Р·Р°РјРѕРІР»РµРЅРЅСЏ РїРѕС‚СЂС–Р±РЅРѕРіРѕ РєР»С–С”РЅС‚Р°\n");
+    printf("help - РІРёРєР»РёРє РґРѕРІС–РґРєРё\n");
+    printf("exit - Р·Р°РІРµСЂС€РёС‚Рё СЂРѕР±РѕС‚Сѓ Р· РїСЂРѕРіСЂР°РјРѕСЋ\n\n");
 }
 
 int main()
@@ -684,30 +684,30 @@ int main()
     setlocale(LC_ALL, "" );
     char cmd[MAX_LEN];
 
-    printf("Програма для керування БД\n");
+    printf("РџСЂРѕРіСЂР°РјР° РґР»СЏ РєРµСЂСѓРІР°РЅРЅСЏ Р‘Р”\n");
     print_help();
 
 
-    //Всі файли повинні бути створені до запуску програми
+    //Р’СЃС– С„Р°Р№Р»Рё РїРѕРІРёРЅРЅС– Р±СѓС‚Рё СЃС‚РІРѕСЂРµРЅС– РґРѕ Р·Р°РїСѓСЃРєСѓ РїСЂРѕРіСЂР°РјРё
 
-    //Зчитування S.fl
+    //Р—С‡РёС‚СѓРІР°РЅРЅСЏ S.fl
     Stack garbage;
     FILE *fl, *ind;
     fl = fopen("S.fl", "r+b");
     scan_garbage(fl, &garbage);
 
-    //Зчитування S.ind
+    //Р—С‡РёС‚СѓРІР°РЅРЅСЏ S.ind
     ind = fopen("S.ind", "r+b");
     int itable[CLIENT_NUMBER];
     scan_itable(ind, itable);
 
-    // Зчитування Sp.fl
+    // Р—С‡РёС‚СѓРІР°РЅРЅСЏ Sp.fl
     Stack sgarbage;
     FILE *sfl;
     sfl = fopen("Sp.fl", "r+b");
     scan_garbage(sfl, &sgarbage);
 
-    // Головний цикл
+    // Р“РѕР»РѕРІРЅРёР№ С†РёРєР»
         while(scanf(MAX_CHAR_SCAN, cmd))
     {
         if (!strcmp(cmd, getm))
@@ -729,7 +729,7 @@ int main()
                 int flag = get_s(fl, sfl, id, itable, &res);
                 if (flag == 1)
                 {
-                    printf("Потрібне замовлення: \n");
+                    printf("РџРѕС‚СЂС–Р±РЅРµ Р·Р°РјРѕРІР»РµРЅРЅСЏ: \n");
                     print_order(&res, 1);
                 }
             }
@@ -740,7 +740,7 @@ int main()
             if ((id = scan_code(fl, itable, &garbage)) != -1)
             {
                 del_m(fl, sfl, id, itable, &garbage, &sgarbage);
-                printf("Клієнта з номером %d видалено успішно\n\n", id);
+                printf("РљР»С–С”РЅС‚Р° Р· РЅРѕРјРµСЂРѕРј %d РІРёРґР°Р»РµРЅРѕ СѓСЃРїС–С€РЅРѕ\n\n", id);
             }
         }
         else if (!strcmp(cmd, dels))
@@ -756,29 +756,29 @@ int main()
                 int id = 0;
                 if((id = scan_code(fl, itable, &garbage)) != -1)
                 {
-                    printf("Введіть код поля, яке ви хочете змінити\n");
-                    printf("1 - Назву\n2 - Телефон\n");
+                    printf("Р’РІРµРґС–С‚СЊ РєРѕРґ РїРѕР»СЏ, СЏРєРµ РІРё С…РѕС‡РµС‚Рµ Р·РјС–РЅРёС‚Рё\n");
+                    printf("1 - РќР°Р·РІСѓ\n2 - РўРµР»РµС„РѕРЅ\n");
                     Client tochange;
                     tochange = get_m(fl, id, itable);
                     int attribute = 0;
                     scanf("%d", &attribute);
                     if (attribute == 1)
                     {
-                        printf("Введіть нову назву клієнта (латиницею)\n");
+                        printf("Р’РІРµРґС–С‚СЊ РЅРѕРІСѓ РЅР°Р·РІСѓ РєР»С–С”РЅС‚Р° (Р»Р°С‚РёРЅРёС†РµСЋ)\n");
                         scanf(MAX_CHAR_SCAN, tochange.name);
                         upd_m(fl, &tochange, itable);
-                        printf("Клієнта номер %d успішно оновлено\n\n", tochange.id);
+                        printf("РљР»С–С”РЅС‚Р° РЅРѕРјРµСЂ %d СѓСЃРїС–С€РЅРѕ РѕРЅРѕРІР»РµРЅРѕ\n\n", tochange.id);
                     }
                     else if (attribute == 2)
                     {
-                        printf("Введіть новий номер телефону клієнта\n");
+                        printf("Р’РІРµРґС–С‚СЊ РЅРѕРІРёР№ РЅРѕРјРµСЂ С‚РµР»РµС„РѕРЅСѓ РєР»С–С”РЅС‚Р°\n");
                         scanf(MAX_CHAR_SCAN, tochange.phone);
                         upd_m(fl, &tochange, itable);
-                        printf("Клієнта номер %d успішно оновлено\n\n", tochange.id);
+                        printf("РљР»С–С”РЅС‚Р° РЅРѕРјРµСЂ %d СѓСЃРїС–С€РЅРѕ РѕРЅРѕРІР»РµРЅРѕ\n\n", tochange.id);
                     }
                     else
                     {
-                        printf("Введено недопустимий код атрибуту\nКоманда буде закінчена\n");
+                        printf("Р’РІРµРґРµРЅРѕ РЅРµРґРѕРїСѓСЃС‚РёРјРёР№ РєРѕРґ Р°С‚СЂРёР±СѓС‚Сѓ\nРљРѕРјР°РЅРґР° Р±СѓРґРµ Р·Р°РєС–РЅС‡РµРЅР°\n");
                         fflush(stdin);
                     }
                 }
@@ -791,31 +791,31 @@ int main()
                 Order tochange;
                 if(get_s(fl, sfl, id, itable, &tochange) == 1)
                 {
-                    printf("Введіть код атрибуту, який ви хочете змінити\n");
-                    printf("1 - Назва\n2 - Інфо\n3 - Кінцеву дату\n");
+                    printf("Р’РІРµРґС–С‚СЊ РєРѕРґ Р°С‚СЂРёР±СѓС‚Сѓ, СЏРєРёР№ РІРё С…РѕС‡РµС‚Рµ Р·РјС–РЅРёС‚Рё\n");
+                    printf("1 - РќР°Р·РІР°\n2 - Р†РЅС„Рѕ\n3 - РљС–РЅС†РµРІСѓ РґР°С‚Сѓ\n");
                     int att = 0;
                     scanf("%d", &att);
                     if (att == 1)
                     {
-                        printf("Введіть нову назву замовлення (латиницею)\n");
+                        printf("Р’РІРµРґС–С‚СЊ РЅРѕРІСѓ РЅР°Р·РІСѓ Р·Р°РјРѕРІР»РµРЅРЅСЏ (Р»Р°С‚РёРЅРёС†РµСЋ)\n");
                         scanf(MAX_CHAR_SCAN, tochange.name);
                         upd_s(fl, sfl, &tochange, id, itable);
                     }
                     else if (att == 2)
                     {
-                        printf("Введіть нову інформацію про замовлення (латиницею)\n");
+                        printf("Р’РІРµРґС–С‚СЊ РЅРѕРІСѓ С–РЅС„РѕСЂРјР°С†С–СЋ РїСЂРѕ Р·Р°РјРѕРІР»РµРЅРЅСЏ (Р»Р°С‚РёРЅРёС†РµСЋ)\n");
                         scanf(MAX_CHAR_SCAN, tochange.info);
                         upd_s(fl, sfl, &tochange, id, itable);
                     }
                     else if (att == 3)
                     {
-                        printf("Введіть нову дату закінчення замовлення\n");
+                        printf("Р’РІРµРґС–С‚СЊ РЅРѕРІСѓ РґР°С‚Сѓ Р·Р°РєС–РЅС‡РµРЅРЅСЏ Р·Р°РјРѕРІР»РµРЅРЅСЏ\n");
                         scanf(MAX_CHAR_SCAN, tochange.final_date);
                         upd_s(fl, sfl, &tochange, id, itable);
                     }
                     else
                     {
-                        printf("Введено недопустимий код атрибуту\nКоманда буде закінчена\n");
+                        printf("Р’РІРµРґРµРЅРѕ РЅРµРґРѕРїСѓСЃС‚РёРјРёР№ РєРѕРґ Р°С‚СЂРёР±СѓС‚Сѓ\nРљРѕРјР°РЅРґР° Р±СѓРґРµ Р·Р°РєС–РЅС‡РµРЅР°\n");
                         fflush(stdin);
                     }
                 }
@@ -842,10 +842,10 @@ int main()
         else if (!strcmp(cmd, "exit"))
         {
             break;
-            printf("Вихід\n");
+            printf("Р’РёС…С–Рґ\n");
         }
         else
-            printf("Введеної команди не існує. Спробуйте ще раз.\nДля виклику допомоги введіть help\n\n");
+            printf("Р’РІРµРґРµРЅРѕС— РєРѕРјР°РЅРґРё РЅРµ С–СЃРЅСѓС”. РЎРїСЂРѕР±СѓР№С‚Рµ С‰Рµ СЂР°Р·.\nР”Р»СЏ РІРёРєР»РёРєСѓ РґРѕРїРѕРјРѕРіРё РІРІРµРґС–С‚СЊ help\n\n");
     }
 
     fseek(sfl, 0L, SEEK_SET);
@@ -865,12 +865,5 @@ int main()
     fclose(sfl);
     fclose(fl);
     fclose(ind);
-    /*
-    insert-m 1 A A
-    insert-m 2 B B
-    insert-m 3 C C
-    insert-m 4 D D
-    insert-m 5 E E
-    */
     return 0;
 }
